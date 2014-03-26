@@ -6,16 +6,18 @@
 
  © ⒻⒶⓇⒾⒷⒶ ⓂⓊⓈⓉⒶⒻⒶ
  
+
+  
 #include <Servo.h>
 
 Servo watergate; // create korlam servo object
 
 int servopin = 11; 
  
- int lowest = analogRead(A0);
+ 
 void setup() {
 
-  
+  //Serial.begin(9600);
  watergate.attach(servopin);
  
   watergate.write(180);
@@ -33,15 +35,27 @@ void loop() {
   
 //  Serial.println(present);
  
-  if (present <= lowest){
+  if (present > 0 && present <= 100 ){
     
   watergate.write(0);
   delay(1000);
   
   }
-  else{ 
+  
+  if ( present > 100 && present <= 250){
+    watergate.write(45);
+    delay(1000);
+  }
+  
+ if ( present > 250 && present <= 800){
+    watergate.write(90);
+    delay(1000);
+  }
+if ( present > 800 ){
     watergate.write(180);
     delay(1000);
   }
-  delay(500);        
+ 
+  
+  delay(300);        // delay in between reads for stability
 }
